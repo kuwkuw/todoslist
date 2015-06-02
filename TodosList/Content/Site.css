@@ -1,0 +1,32 @@
+﻿.todo-list {
+    list-style: none;
+}
+
+.todo-list ul {
+    list-style: none;
+}
+
+.category {
+    display: inline-block;
+}
+
+.category:hover {
+    cursor: pointer;
+}
+
+ul.todo {
+    display: inline-block;
+}
+
+.item {
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.item.text {
+    width: 130px;
+}
+
+.item.date {
+    width: 90px;
+}

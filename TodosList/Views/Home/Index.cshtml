@@ -1,0 +1,59 @@
+﻿    
+<section class="content-wrapper main-content clear-fix" data-ng-controller="todoCntrl">
+    <ul class="todo-list">
+        <li data-ng-repeat="category in todos">
+            <div>
+                <h3 class="category">
+                    <span class="category label label-default" data-ng-click="ShowCategory(category)">
+                        {{category.Name}}
+                    </span>
+                </h3>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelCategory(category)"></span>
+            </div>
+            <ul class="todo" data-ng-show="category.isVisible">
+                <span><input class="btn btn-default" type="button" value="Add todo" data-ng-click="ShowForm('addTodoForm')" /></span>
+                <form class="form-inline" name="addTodo" data-ng-show="isShow.addTodoForm" data-ng-submit="AddNewTodo(category.CategoryId)">
+                    <div class="form-group">
+                        <input type="text" class="form-control" data-ng-model="newTodo.Text" placeholder="Text" />
+                        <input type="date" class="form-control" data-ng-model="newTodo.DateTime" placeholder="Date" />
+                        <input class="btn btn-default" type="submit" value="Ok" />
+                    </div>
+                </form>
+                <li data-ng-repeat="todo in category.Todos">
+                    <hr/>
+                    <span class="item text">{{todo.Text}}</span>
+                    <span class="item date">{{todo.DateTime | date}}</span>
+                    <span class="item">
+                        <input type="checkbox" data-ng-model="todo.IsDone" data-ng-click="TodoIsChecked(todo)" />
+                    </span>
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelTodo(todo)"></span>
+                    <span><input class="btn btn-default" type="button" value="Add Subtodo" data-ng-click="ShowAddSubTodoForm(todo)" /></span>
+                    <form class="form-inline" name="addTodo" data-ng-show="todo.isVisibleAddSubTodoForm" data-ng-submit="AddNewSubTodo(category.CategoryId, todo.TodoId)">
+                        <div class="form-group">
+                            <input type="text" class="form-control" data-ng-model="newSubTodo.Text" placeholder="Text" />
+                            <input class="btn btn-default" type="submit" value="Ok" />
+                        </div>
+                    </form>
+                    <ul>
+                        <li data-ng-repeat="subtodo in todo.SubTodos">
+                            <span class="item text">{{subtodo.Text}}</span>
+                            <span class="item">
+                                <input type="checkbox" data-ng-model="subtodo.IsDone" data-ng-click="SubTodoIsChecked(subtodo)" />
+                            </span>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelSubTodo(subtodo, category.CategoryId)"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <span><input class="btn btn-default" type="button" value="Add category" data-ng-click="ShowForm('addCategoryForm')" /></span>
+    <form class="form-inline" name="addTodo" data-ng-show="isShow.addCategoryForm" data-ng-submit="AddNewCategory()">
+        <div class="form-group">
+            <input class="form-control" type="text" data-ng-model="newCategory.Name" placeholder="Categoty name" />
+            <input class="btn btn-default" type="submit" value="Ok" />
+        </div>
+    </form>
+    
+</section>
+
