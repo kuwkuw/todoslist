@@ -31,3 +31,7 @@ ul.todo {
 .item.date {
     width: 90px;
 }
+
+.item.control:hover {
+    cursor: pointer;
+}

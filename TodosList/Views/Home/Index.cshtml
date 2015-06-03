@@ -1,12 +1,10 @@
 ﻿    
-<section class="content-wrapper main-content clear-fix" data-ng-controller="todoCntrl">
+<section class="content-wrapper main-content clear-fix" data-ng-controller="todoCntrl" data-ng-cloak>
     <ul class="todo-list">
         <li data-ng-repeat="category in todos">
             <div>
                 <h3 class="category">
-                    <span class="category label label-default" data-ng-click="ShowCategory(category)">
-                        {{category.Name}}
-                    </span>
+                    <span class="category label label-default" data-ng-bind="category.Name" data-ng-click="ShowCategory(category)"></span>
                 </h3>
                 <span class="glyphicon glyphicon-remove item control" aria-hidden="true" data-ng-click="DelCategory(category)"></span>
             </div>
@@ -22,8 +20,8 @@
                 </form>
                 <li data-ng-repeat="todo in category.Todos">
                     <hr/>
-                    <span class="item text">{{todo.Text}}</span>
-                    <span class="item date">{{todo.DateTime | date}}</span>
+                    <span" class="item text" data-ng-bind="todo.Text"></span>
+                    <span class="item date" data-ng-bind="todo.DateTime | date"></span>
                     <span class="item">
                         <input type="checkbox" data-ng-model="todo.IsDone" data-ng-click="TodoIsChecked(todo)" />
                     </span>
@@ -38,7 +36,7 @@
                     <ul>
                         <li data-ng-repeat="subtodo in todo.SubTodos">
                             <hr />
-                            <span class="item text">{{subtodo.Text}}</span>
+                            <span class="item text" data-ng-bind="subtodo.Text"></span>
                             <span class="item">
                                 <input type="checkbox" data-ng-model="subtodo.IsDone" data-ng-click="SubTodoIsChecked(subtodo)" />
                             </span>
