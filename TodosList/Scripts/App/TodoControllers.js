@@ -70,9 +70,9 @@ todoControllers.controller('todoCntrl', ['$scope', '$http', function($scope, $ht
     $scope.AddNewTodo = function(catagoryId) {
         $scope.todos.forEach(function(element) {
             if (element.CategoryId === catagoryId && !$.isEmptyObject($scope.newTodo)) {
-                var date = formatToTodoObject(catagoryId);
-                $http.post('api/todo', date).success(function () {
-                    element.Todos.push(date);
+                var newTodo = formatToTodoObject(catagoryId);
+                $http.post('api/todo', newTodo).success(function (data) {
+                    element.Todos.push(data);
                     $scope.newTodo = {};
                 });
             };
@@ -114,8 +114,8 @@ todoControllers.controller('todoCntrl', ['$scope', '$http', function($scope, $ht
                     category.Todos.forEach(function (todo) {
                         if (todo.TodoId === todoId) {
                             $scope.newSubTodo.TodoId = todoId;
-                            $http.post('api/subtodo', $scope.newSubTodo).success(function (date) {
-                                todo.SubTodos.push(date);
+                            $http.post('api/subtodo', $scope.newSubTodo).success(function (data) {
+                                todo.SubTodos.push(data);
                                 $scope.newSubTodo = {};
                             });
                         }
@@ -160,6 +160,18 @@ todoControllers.controller('todoCntrl', ['$scope', '$http', function($scope, $ht
                 });
             });
         });
+    }
+
+    //Clear checked todos in category
+    $scope.Clear = function (categoryId) {
+        $http.post('api/category/' + categoryId).success(function(data) {
+            $scope.todos.forEach(function(category) {
+                if (category.CategoryId === data.CategoryId) {
+                    category.Todos = data.Todos;
+                }
+            });
+        });
+
     }
 
     //Formatting object in convenient type

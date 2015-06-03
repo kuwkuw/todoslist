@@ -13,16 +13,41 @@ namespace TodosList.Services
         {
             context.TodoCategories.AddRange(new TodoCategory[]
             {
-                new TodoCategory{Name = "Home"
-                    , Todos = new List<Todo>()
-                {
-                    new Todo{DateTime = new DateTime(2015, 6, 4), Text = "cleaning in home", IsDone = false, SubTodos = new List<SubTodo>()
+                new TodoCategory{
+                    Name = "Home",
+                    Todos = new List<Todo>()
                     {
-                        new SubTodo{IsDone = false, Text = "wash dishes"},
-                        new SubTodo{IsDone = false, Text = "cleaning in bathroom"},
-                        new SubTodo{IsDone = false, Text = "cleaning in bedroom"}
-                    }}
-                }
+                        new Todo{DateTime = new DateTime(2015, 6, 4), Text = "Clean the house", IsDone = false, SubTodos = new List<SubTodo>()
+                        {
+                            new SubTodo{IsDone = false, Text = "Wash dishes"},
+                            new SubTodo{IsDone = false, Text = "Cleaning in bathroom"},
+                            new SubTodo{IsDone = false, Text = "Cleaning in bedroom"}
+                        }},
+                        new Todo{DateTime = new DateTime(2015,6,4), Text = "Sort books"}
+                    }
+                },
+                new TodoCategory
+                {
+                     Name = "Work",
+                     Todos = new List<Todo>()
+                     {
+                         new Todo
+                         {
+                             DateTime = new DateTime(2015,6,4), Text = "Do my work", IsDone = false
+                         }
+                         
+                     }
+                },
+                new TodoCategory
+                {
+                    Name = "Other",
+                    Todos = new List<Todo>()
+                    {
+                        new Todo{DateTime = new DateTime(2015,6,4),Text = "Shopping", IsDone = false, SubTodos = new List<SubTodo>()
+                        {
+                            new SubTodo{IsDone = false, Text = "Buy new shirt"}
+                        }}
+                    }
                 }
             });
 

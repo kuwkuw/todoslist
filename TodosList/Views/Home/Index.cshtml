@@ -8,10 +8,11 @@
                         {{category.Name}}
                     </span>
                 </h3>
-                <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelCategory(category)"></span>
+                <span class="glyphicon glyphicon-remove item control" aria-hidden="true" data-ng-click="DelCategory(category)"></span>
             </div>
             <ul class="todo" data-ng-show="category.isVisible">
-                <span><input class="btn btn-default" type="button" value="Add todo" data-ng-click="ShowForm('addTodoForm')" /></span>
+                <input class="btn btn-default" type="button" value="Add todo" data-ng-click="ShowForm('addTodoForm')" />
+                <input class="btn btn-default" type="button" value="Clear list" data-ng-click="Clear(category.CategoryId)" />
                 <form class="form-inline" name="addTodo" data-ng-show="isShow.addTodoForm" data-ng-submit="AddNewTodo(category.CategoryId)">
                     <div class="form-group">
                         <input type="text" class="form-control" data-ng-model="newTodo.Text" placeholder="Text" />
@@ -26,7 +27,7 @@
                     <span class="item">
                         <input type="checkbox" data-ng-model="todo.IsDone" data-ng-click="TodoIsChecked(todo)" />
                     </span>
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelTodo(todo)"></span>
+                    <span class="glyphicon glyphicon-remove item control" aria-hidden="true" data-ng-click="DelTodo(todo)"></span>
                     <span><input class="btn btn-default" type="button" value="Add Subtodo" data-ng-click="ShowAddSubTodoForm(todo)" /></span>
                     <form class="form-inline" name="addTodo" data-ng-show="todo.isVisibleAddSubTodoForm" data-ng-submit="AddNewSubTodo(category.CategoryId, todo.TodoId)">
                         <div class="form-group">
@@ -36,11 +37,12 @@
                     </form>
                     <ul>
                         <li data-ng-repeat="subtodo in todo.SubTodos">
+                            <hr />
                             <span class="item text">{{subtodo.Text}}</span>
                             <span class="item">
                                 <input type="checkbox" data-ng-model="subtodo.IsDone" data-ng-click="SubTodoIsChecked(subtodo)" />
                             </span>
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-click="DelSubTodo(subtodo, category.CategoryId)"></span>
+                            <span class="glyphicon glyphicon-remove item control" aria-hidden="true" data-ng-click="DelSubTodo(subtodo, category.CategoryId)"></span>
                         </li>
                     </ul>
                 </li>

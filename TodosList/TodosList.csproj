@@ -143,7 +143,6 @@
     <Compile Include="Models\TodoContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ContextInitialiser.cs" />
-    <Compile Include="Services\IRepository.cs" />
     <Compile Include="Services\TodoRepository.cs" />
   </ItemGroup>
   <ItemGroup>

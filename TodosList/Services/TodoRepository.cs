@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
 using TodosList.Models;
+using WebGrease.Css.Extensions;
 
 namespace TodosList.Services
 {
@@ -20,16 +21,6 @@ namespace TodosList.Services
         {
             return _context.TodoCategories.ToList();
         } 
-
-        /// <summary>
-        /// Get tofo by Id
-        /// </summary>
-        /// <param name="id">todo id</param>
-        /// <returns>Todo class</returns>
-        //public Todo GetTodo(int id)
-        //{
-        //    return _context.Todos.Find(id);
-        //}
 
         /// <summary>
         /// Add new category
@@ -50,6 +41,24 @@ namespace TodosList.Services
             }
 
         }
+
+        /// <summary>
+        /// Get todo category
+        /// </summary>
+        /// <param name="id">category id</param>
+        /// <returns></returns>
+        public TodoCategory GetCategory(int id)
+        {
+            try
+            {
+                return _context.TodoCategories.Find(id);
+            }
+            catch (Exception)
+            {
+               return null;
+            }
+            
+        } 
 
         /// <summary>
         /// Delete category from database
@@ -76,18 +85,33 @@ namespace TodosList.Services
         /// </summary>
         /// <param name="newTodo">new item</param>
         /// <returns>result of adding</returns>
-        public bool AddTodo(Todo newTodo)
+        public bool AddTodo(Todo newTodo, out Todo todo)
         {
+            todo = new Todo();
             try
             {
                 _context.Todos.Add(newTodo);
                 _context.SaveChanges();
+                
+                //Get created task form datebase
+                todo = _context.Todos.Where(item=>item.Text.Equals(newTodo.Text)).FirstOrDefault();
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Get todo from category
+        /// </summary>
+        /// <param name="id">todo id</param>
+        /// <returns></returns>
+        public Todo GetTodo(int id)
+        {
+            return _context.Todos.Find(id);
         }
 
         /// <summary>
@@ -192,10 +216,10 @@ namespace TodosList.Services
         }
 
         /// <summary>
-        /// Update subtodo 
+        /// Update subtask 
         /// </summary>
-        /// <param name="newSubTodo">new state</param>
-        /// <returns>result of ubdating</returns>
+        /// <param name="newSubTodo">new subtask state</param>
+        /// <returns>result of updating</returns>
         public bool UpdateSubTodo(SubTodo newSubTodo)
         {
             try
@@ -207,8 +231,9 @@ namespace TodosList.Services
 
                     if (subTodo != null)
                     {
-                        subTodo.IsDone = newSubTodo.IsDone;
-
+                        subTodo.IsDone = newSubTodo.IsDone;// mark subtask as done
+                        
+                        //If all subtask in todos checked todos mark it as done
                         if (!todo.SubTodos.Where(subtodo => subtodo.IsDone == false).Any() && !todo.IsDone)
                         {
                             todo.IsDone = true;
@@ -224,6 +249,38 @@ namespace TodosList.Services
                 return false;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Clean category from checked todos and subtodos
+        /// </summary>
+        /// <param name="categoryId">Category Id</param>
+        /// <returns>cleaning state</returns>
+        public bool CleanCategory(int categoryId)
+        {
+            try
+            {
+                var category = _context.TodoCategories.Find(categoryId);
+                var todos = category.Todos.FindAll(item => item.IsDone);
+                
+                if (todos.Count > 0)
+                    _context.Todos.RemoveRange(todos);//Remove done things (todos) 
+
+                List<SubTodo> sb = new List<SubTodo>();
+                category.Todos.Where(item => item.IsDone == false).ForEach(i => i.SubTodos.Where(t => t.IsDone).ForEach(z => sb.Add(z)));
+                foreach (var subTodo in sb)
+                {
+                    _context.SubTodos.Remove(subTodo);//Remove done things (subtodos)
+                }
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public void Dispose()

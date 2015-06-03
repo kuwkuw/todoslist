@@ -16,17 +16,6 @@ namespace TodosList.Controllers
         {
             _todosRepository = new TodoRepository();
         }
-        // GET api/subtodo
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/subtodo/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/subtodo
         [HttpPost]

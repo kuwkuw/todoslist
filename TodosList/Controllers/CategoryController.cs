@@ -18,19 +18,17 @@ namespace TodosList.Controllers
             _todosRepository = new TodoRepository();
         }
 
+        [HttpGet]
         [Route("api/category")]
         public IEnumerable<TodoCategory> Get()
         {
             return _todosRepository.GetTodosList();
         }
 
-        // GET api/category/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/category
+        [HttpPost]
+        [Route("api/category")]
         public IHttpActionResult Post(TodoCategory newCategory)
         {
             if (_todosRepository.AddCategory(newCategory))
@@ -40,9 +38,16 @@ namespace TodosList.Controllers
             return NotFound();
         }
 
-        // PUT api/category/5
-        public void Put(int id, [FromBody]string value)
+        // POST api/category/5
+        [HttpPost]
+        [Route("api/category/{Id}")]
+        public IHttpActionResult Post(int id)
         {
+            if (_todosRepository.CleanCategory(id))
+            {
+                return Ok(_todosRepository.GetCategory(id));
+            }
+            return NotFound();
         }
 
         // DELETE api/category/5

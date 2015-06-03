@@ -19,20 +19,15 @@ namespace todolist.Controllers
             _todosRepository = new TodoRepository();
         }
 
-        // GET api/todo/5
-        //public Todo Get(int id)
-        //{
-        //    return _todosRepository.GetTodo(id);
-        //}
-
         // POST api/todo
         [HttpPost]
         [Route("api/todo")]
-        public IHttpActionResult PostTodo(Todo todo)
+        public IHttpActionResult PostTodo(Todo newTodo)
         {
-            if (_todosRepository.AddTodo(todo))
+            Todo td;
+            if (_todosRepository.AddTodo(newTodo,out td))
             {
-                return Ok(todo);
+                return Ok(td);
             }
 
             return NotFound();
