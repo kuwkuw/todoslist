@@ -19,7 +19,16 @@ namespace TodosList.Services
         /// <returns>todo list</returns>
         public IEnumerable<TodoCategory> GetTodosList()
         {
-            return _context.TodoCategories.ToList();
+            try
+            {
+                return _context.TodoCategories.ToList();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
         } 
 
         /// <summary>

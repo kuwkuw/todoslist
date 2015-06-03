@@ -20,7 +20,7 @@
                 </form>
                 <li data-ng-repeat="todo in category.Todos">
                     <hr/>
-                    <span" class="item text" data-ng-bind="todo.Text"></span>
+                    <span class="item text" data-ng-bind="todo.Text"></span>
                     <span class="item date" data-ng-bind="todo.DateTime | date"></span>
                     <span class="item">
                         <input type="checkbox" data-ng-model="todo.IsDone" data-ng-click="TodoIsChecked(todo)" />
